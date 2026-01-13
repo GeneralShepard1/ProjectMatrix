@@ -208,4 +208,69 @@ bilo ko moze pristupiti bazi podataka sa root privlieegijama
 postaviti jaku lozinku na root
 
 
+1. fizicki sloj ranjiv na fizicki pristup,snifanje saobracaja
+2.data link sloj(mac sloj) manipulacija mac adtresama,mac spoofingmac flooding,man in the middle)
+3.network sloj fokusiran na protkole,smurf attack 
+4.transportni sloj vezan za portove,otmice sesije,dos napad zloupotrebom protokola
+5.sesijski sloj,otmice sesija, cross side scripting
+6.prezentacijski sloj, obmanjivanje korisnika phising napadi
+7.aplikacijski sloj napadac koristi pripremljene skripte programcice exploiiute da bi kompromitovao
 
+Najcesci prtpookoli koji mogu biti predmet napada
+1.DNS(ako stane dns staje mreza)
+2.SMB-dijeli resurse na niovu mreze.
+3.ssh(secure shell)kritpovano povezivanje na remote racunar i komunikacija
+4.http (treba imat tls ssl )dodatni sloj koji omogucava enkripciju komunikacije
+5.vpn protokol oslanja se na skup protokola sa data i network sloja
+6.dhcp konfigurise ip adrese u mrezi
+
+Pasivni napadi:sniffanje paketa,mac floodanje,arp poisoning
+Aktivni napadi:man in the middle,port scanning, dos/ddos napadi,brute force autentifikacija
+
+Ranjivi mrezni protokoli:
+
+1.smb:eternal blue ranjivost kod smb v1
+      samba cry ranjivost samba servera
+	  smbghost- remote code execution
+mjere protiv:blokirati smbv1,aktiivrati smb potpisivanje autentifikacije,primjenit princip privilegija,
+             redovna primjena patcheva,segmentirati mrezu i blokirati nepotrebne portove(445,139)
+
+2.DNS:dns spoofing(ubacivanje laznih dns odgovora)
+      dns cache poisoning(trovanje dns servera, varanje i slanje ip adrese prema laznom web serveru)
+mjere protiv:imlementacija DNSSEC,upotreba split horizon dns,redovan update dnsa,ogranicavanje samo na
+      autorizovane servere,rate limit,dhcp snooping
+
+3.http:phising(vjerna lazna kopija)
+       saobracaj u plain tekstu
+	   cookies-informacije u sesiji se pohrane u plain text 
+	   sesion hijacking-otimanje sesije
+	   reply napad-napadc presretne legitimni opdatak i ponovo ga posalje serveru
+	   sql injection ubacivanje sql komandi u polja
+	   XSS xcross site scripting-insert koda u postojecu web app
+mjere protiv:tls certifikat, uvijek koristit https,implementiraj hsts,validiraj input,koristi secure cookies,
+             redovan patch web servera i app
+			 
+4.ssh:ssh v1 je neisguran zbog slabe enkripcije i integriteta
+      ssh v2 sigurniji al losom konfiguracijom moze bit zajeban
+	  napadi:brute force,verifikacija servery key fingerprinta,agent hijacking,
+mjere protiv:koristenje sshv2,onemoguci password auth nego key based auth,mfa aktivacija,
+             ogranicen agent forwarding,postavit fail2ban
+
+5.ip protokol:ip spoofing(laziranje ip adrese)
+               tcp syn flood(napadac kreira modifikovan ip paket i lazira svoju ip adresu,salje ih stalno i 
+			   obori server
+               smurf attack(salje pakete spoofanom ip adrom vecemb roju hostova i preplavi saobracaj)
+               LAND attack(ne moze poslije windows 98,lazira izorisnu i destinacijsku ip dovede do crasha)
+mjere protiv:ip source gouard
+
+6.arp protokol:arp spoofanje(laziranje arp odgovora)
+               man in the middle(napadc se pozicionira izmedju zrtve i destinacija
+mjere protiv:dynamic arp inspection,koristenje statickog arpa
+
+7.DHCP:Rogue dhcp server(lazni dhcp server)
+       dhcp starvation(spofanje mac adrese s koje salje zahtjev, iscrpi sve adrese i ne moze dhcp
+	   dodijelit ip adresu)
+mjere protiv:dhcp snooping,rate limit,port security,
+
+			   
+		
