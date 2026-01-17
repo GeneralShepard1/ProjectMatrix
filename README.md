@@ -34,6 +34,18 @@ uname -r
 Ranjivo: star kernel (stare ranjivosti)
 Fix: update/patch
 
+which apparmor_status
+Ako izbaci putanju npr /usr/sbin/apparmor_status → postoji.
 
+sudo apparmor_status
+Ako piše “profiles are in enforce mode” → aktivno + enforcing 
+Ako piše “profiles are in complain mode” → aktivno ali samo upozorava 
+Ako kaže “apparmor module is not loaded” → nije aktivan 
 
+Da li servis radi
+systemctl status apparmor
 
+2.1 Najbrža provjera statusa SeLinuxa
+sestatus
+
+which sestatus
