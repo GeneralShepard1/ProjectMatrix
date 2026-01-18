@@ -25,6 +25,7 @@ Ranjivo ako: sve ACCEPT (nema zaštite)
 Fix: default DROP + dozvoli samo potrebno
 
 1.6 File permissions (bitan dokaz)
+ls-la sve da vidis
 ls -la /etc/shadow
 Ranjivo ako: -rw-r--r--
 Sigurno: -rw-------
