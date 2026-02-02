@@ -50,3 +50,23 @@ systemctl status apparmor
 sestatus
 
 which sestatus
+
+
+chmod
+owner-group-others
+
+Dozvola	Slovo	Broj
+read	r	4
+write	w	2
+execute	x	1
+
+Sabiraš ih.
+
+Primjeri:
+r = 4
+rw = 4+2 = 6
+rx = 4+1 = 5
+rwx = 4+2+1 = 7
+
+
+
