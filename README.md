@@ -101,7 +101,8 @@ echo "novi red" >> test.txt
 
 1. Echo koji upisuje drugi echo u fajl
 echo "echo 'dobar dan'" > skripta.sh
-
+sa jednim > overwrite
+sa dva >>dodajes
 
 
 
