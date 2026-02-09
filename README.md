@@ -104,5 +104,13 @@ echo "echo 'dobar dan'" > skripta.sh
 sa jednim > overwrite
 sa dva >>dodajes
 
+#!/bin/bash
+
+a=5
+b=3
+
+rezultat=$((a + b))
+
+echo $rezultat
 
 
