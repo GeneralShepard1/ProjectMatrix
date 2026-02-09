@@ -68,5 +68,40 @@ rw = 4+2 = 6
 rx = 4+1 = 5
 rwx = 4+2+1 = 7
 
+skripte
+touch skripta pravi se
+ime="Melloo"
+echo "Zdravo $ime"ž
+broj=5
+echo $broj
+
+unos korisnika
+echo "Unesi ime:"
+read ime
+echo "Zdravo $ime"
+
+if uslov
+broj=10
+
+if [ $broj -gt 5 ]; then
+    echo "Broj je veci od 5"
+fi
+
+for
+for i in 1 2 3 4 5
+do
+    echo $i
+done
+
+upis u fajl
+echo "tekst" > test.txt
+
+dodavanje u fajl
+echo "novi red" >> test.txt
+
+1. Echo koji upisuje drugi echo u fajl
+echo "echo 'dobar dan'" > skripta.sh
+
+
 
 
