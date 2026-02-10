@@ -1,109 +1,236 @@
-#1.1 Provjera IP adrese
-ip a
+# Linux Network, Security & Bash Basics
 
-1.2 Ručna konfiguracija mreže (ako nema IP)
+Ovaj dokument sadrži osnovne Linux komande za provjeru mreže, sigurnosti sistema, permisija, firewall-a i osnova bash skripti.
+
+---
+
+## 1. Network Configuration
+
+### 1.1 Provjera IP adrese
+
+```bash
+ip a
+```
+
+Prikazuje sve mrežne interfejse i dodijeljene IP adrese.
+
+---
+
+### 1.2 Ručna konfiguracija mreže (ako nema IP adrese)
+
+```bash
 sudo systemctl stop NetworkManager
 sudo systemctl disable NetworkManager
 sudo ip addr flush dev eth0
 sudo ip addr add 172.27.170.100/20 dev eth0
 sudo ip route add default via 172.27.160.1
 echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
+```
 
-1.3 Provjera konekcije
+Koristi se kada mreža nije automatski konfigurisana.
+
+---
+
+### 1.3 Provjera konekcije
+
+```bash
 ping -c 2 172.27.160.1
 ping -c 2 8.8.8.8
 ping -c 2 google.com
+```
 
-1.4 Lokalni portovi na Kali (šta sluša)
+- provjera gateway-a  
+- provjera internet konekcije  
+- provjera DNS rezolucije  
+
+---
+
+### 1.4 Lokalni portovi (šta sluša na sistemu)
+
+```bash
 sudo ss -tulnp
 sudo lsof -i -P -n | grep LISTEN
+```
 
-1.5 Firewall provjera
+Prikazuje aktivne servise i otvorene portove.
+
+---
+
+### 1.5 Firewall provjera
+
+```bash
 sudo iptables -L -n
 sudo iptables -S
-Ranjivo ako: sve ACCEPT (nema zaštite)
-Fix: default DROP + dozvoli samo potrebno
+```
 
-1.6 File permissions (bitan dokaz)
-ls-la sve da vidis
+Ranjivo stanje:
+Ako su sve politike ACCEPT → nema zaštite.
+
+Preporuka:
+Default politika DROP i dozvoliti samo potrebne portove.
+
+---
+
+### 1.6 File permissions (bitan dokaz)
+
+```bash
+ls -la
 ls -la /etc/shadow
-Ranjivo ako: -rw-r--r--
-Sigurno: -rw-------
+```
 
-1.7 Kernel verzija
+Ranjivo:
+-rw-r--r--
+
+Sigurno:
+-rw-------
+
+---
+
+### 1.7 Kernel verzija
+
+```bash
 uname -r
-Ranjivo: star kernel (stare ranjivosti)
-Fix: update/patch
+```
 
+Star kernel može sadržavati poznate ranjivosti.
+
+Fix:
+Update sistema i patchiranje.
+
+---
+
+### 1.8 AppArmor provjera
+
+```bash
 which apparmor_status
-Ako izbaci putanju npr /usr/sbin/apparmor_status → postoji.
-
 sudo apparmor_status
-Ako piše “profiles are in enforce mode” → aktivno + enforcing 
-Ako piše “profiles are in complain mode” → aktivno ali samo upozorava 
-Ako kaže “apparmor module is not loaded” → nije aktivan 
-
-Da li servis radi
 systemctl status apparmor
+```
 
-2.1 Najbrža provjera statusa SeLinuxa
+Status:
+- enforce mode → aktivno i štiti
+- complain mode → samo upozorava
+- module is not loaded → nije aktivan
+
+---
+
+### 1.9 SELinux provjera
+
+```bash
 sestatus
-
 which sestatus
+```
 
+Najbrža provjera statusa SELinux-a.
 
-chmod
-owner-group-others
+---
 
-Dozvola	Slovo	Broj
-read	r	4
-write	w	2
-execute	x	1
+## 2. Linux Permissions (chmod)
 
-Sabiraš ih.
+Dozvole:
 
-Primjeri:
-r = 4
-rw = 4+2 = 6
-rx = 4+1 = 5
-rwx = 4+2+1 = 7
+read (r) = 4  
+write (w) = 2  
+execute (x) = 1  
 
-skripte
-touch skripta pravi se
+Sabiranjem dobijamo:
+
+r = 4  
+rw = 6  
+rx = 5  
+rwx = 7  
+
+Struktura:
+owner - group - others
+
+---
+
+## 3. Bash Skripte – Osnove
+
+### Kreiranje skripte
+
+```bash
+touch skripta.sh
+```
+
+---
+
+### Varijable
+
+```bash
 ime="Melloo"
-echo "Zdravo $ime"ž
+echo "Zdravo $ime"
+
 broj=5
 echo $broj
+```
 
-unos korisnika
+---
+
+### Unos korisnika
+
+```bash
 echo "Unesi ime:"
 read ime
 echo "Zdravo $ime"
+```
 
-if uslov
+---
+
+### IF uslov
+
+```bash
 broj=10
 
 if [ $broj -gt 5 ]; then
     echo "Broj je veci od 5"
 fi
+```
 
-for
+---
+
+### FOR petlja
+
+```bash
 for i in 1 2 3 4 5
 do
     echo $i
 done
+```
 
-upis u fajl
+---
+
+### Upis u fajl
+
+```bash
 echo "tekst" > test.txt
+```
 
-dodavanje u fajl
+Overwrite fajla.
+
+---
+
+### Dodavanje u fajl
+
+```bash
 echo "novi red" >> test.txt
+```
 
-1. Echo koji upisuje drugi echo u fajl
+Dodavanje na kraj fajla.
+
+---
+
+### Echo koji upisuje drugi echo u fajl
+
+```bash
 echo "echo 'dobar dan'" > skripta.sh
-sa jednim > overwrite
-sa dva >>dodajes
+```
 
+---
+
+### Bash sabiranje brojeva
+
+```bash
 #!/bin/bash
 
 a=5
@@ -112,5 +239,4 @@ b=3
 rezultat=$((a + b))
 
 echo $rezultat
-
-
+```
