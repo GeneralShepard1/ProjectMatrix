@@ -25,6 +25,8 @@ sudo ip addr flush dev eth0
 sudo ip addr add 172.27.170.100/20 dev eth0
 sudo ip route add default via 172.27.160.1
 echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
+ip link set eth0 up (ako zatreba)
+
 ```
 
 Koristi se kada mreža nije automatski konfigurisana.
